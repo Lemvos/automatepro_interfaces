@@ -1,0 +1,5 @@
+uint16 in_current
+uint16 voltage_rail_batt
+uint16 voltage_rail_5V
+uint16 voltage_rail_3_3V
+uint16 board_temp
