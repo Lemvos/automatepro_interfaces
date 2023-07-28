@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(board_status_msg)
+project(board_monitor_msg)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -34,7 +34,7 @@ endif()
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/BoardStatusMsg.msg"
+  "msg/BoardMonitorMsg.msg"
  )
 
 ament_package()
