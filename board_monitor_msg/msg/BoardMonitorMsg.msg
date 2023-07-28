@@ -1,5 +1,7 @@
-uint16 in_current
-uint16 voltage_rail_batt
-uint16 voltage_rail_v5
-uint16 voltage_rail_v3_3
+uint16 vbatt_current
+uint16 v5_current_monitor
+uint16 v3_3_current_monitor
+uint16 vbatt_voltage_monitor
+uint16 v5_voltage_monitor
+uint16 v3_3_voltage_monitor
 uint16 board_temp
