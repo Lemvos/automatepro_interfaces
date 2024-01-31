@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(board_monitor_msg)
+project(digital_in_msg)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -32,11 +32,9 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 find_package(rosidl_default_generators REQUIRED)
-find_package(builtin_interfaces REQUIRED)
-find_package(std_msgs REQUIRED)
+
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/BoardMonitorMsg.msg"
-  DEPENDENCIES builtin_interfaces std_msgs
+  "msg/DigitalInMsg.msg"
  )
 
 ament_package()

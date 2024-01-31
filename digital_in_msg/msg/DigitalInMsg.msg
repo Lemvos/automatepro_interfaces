@@ -1,0 +1,10 @@
+bool di01
+bool di02
+bool di03
+bool di04
+bool di05
+bool di06
+bool di07
+bool di08
+bool di09
+bool di10
