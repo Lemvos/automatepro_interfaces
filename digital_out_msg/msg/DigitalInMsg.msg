@@ -12,4 +12,4 @@ uint8 DO_10=10
 std_msg/Header header
 
 uint8 do_id
-bool value
+uint8 value
