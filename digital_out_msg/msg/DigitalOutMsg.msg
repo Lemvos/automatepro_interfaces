@@ -1,5 +1,5 @@
-uint8 do_id
-uint8 value
+uint8 do_pin_id
+uint8 duty_cycle_percent
 
 uint8 DO_01=1
 uint8 DO_02=2
