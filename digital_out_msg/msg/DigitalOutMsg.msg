@@ -1,4 +1,3 @@
-std_msgs/Header header
 uint8 do_id
 uint8 value
 
