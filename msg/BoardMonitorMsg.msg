@@ -1,0 +1,10 @@
+uint16 vbatt_board_current_monitor
+uint16 v12_current_monitor
+uint16 v5_current_monitor
+uint16 vbatt_voltage_monitor
+uint16 v12_voltage_monitor
+uint16 v5_voltage_monitor
+bool v12_power_good
+bool v5_power_good
+bool v3_3_power_good
+uint8 board_temp

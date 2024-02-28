@@ -47,6 +47,6 @@ uint8 HIGH_SIDE_DRIVE_12=41
 bool FORWARD=true
 bool BACKWARD=false
 
-uint8 dd_pin_id
-bool  direction
+uint8 d_drive_pin_id
+bool direction
 uint8 percent_duty_cycle

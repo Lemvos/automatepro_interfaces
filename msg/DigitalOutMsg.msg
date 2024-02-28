@@ -1,0 +1,14 @@
+uint8 DIGITAL_OUT_01=1
+uint8 DIGITAL_OUT_02=2
+uint8 DIGITAL_OUT_03=3
+uint8 DIGITAL_OUT_04=4
+uint8 DIGITAL_OUT_05=5
+uint8 DIGITAL_OUT_06=6
+uint8 DIGITAL_OUT_07=7
+uint8 DIGITAL_OUT_08=8
+uint8 DIGITAL_OUT_09=9
+uint8 DIGITAL_OUT_10=10
+
+
+uint8 d_out_pin_id
+uint8 duty_cycle_percent

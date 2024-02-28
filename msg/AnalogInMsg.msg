@@ -1,0 +1,14 @@
+uint16 ain01
+uint16 ain02
+uint16 ain03
+uint16 ain04
+uint16 ain05
+uint16 ain06
+uint16 ain07
+uint16 ain08
+uint16 ain09
+uint16 ain10
+uint16 ain11
+uint16 ain12
+uint16 ain13
+uint16 ain14
