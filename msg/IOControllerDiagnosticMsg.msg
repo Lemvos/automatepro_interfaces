@@ -7,4 +7,8 @@ uint16 v5_voltage_monitor
 bool v12_power_good
 bool v5_power_good
 bool v3_3_power_good
+bool motor_drive_fault_1
+bool motor_drive_fault_2
+bool motor_drive_fault_3
+bool motor_drive_fault_4
 uint8 board_temp

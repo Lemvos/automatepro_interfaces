@@ -34,10 +34,11 @@ endif()
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AnalogInMsg.msg"
-  "msg/BoardMonitorMsg.msg"
+  "msg/IOControllerDiagnosticMsg.msg"
   "msg/DigitalDriveOutMsg.msg"
   "msg/DigitalInMsg.msg"
   "msg/DigitalOutMsg.msg"
+  "msg/WarningSystemsMsg.msg"
   
  )
 
