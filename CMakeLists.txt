@@ -17,6 +17,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(std_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -34,12 +35,13 @@ endif()
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AnalogInMsg.msg"
-  "msg/IOControllerDiagnosticMsg.msg"
   "msg/DigitalDriveOutMsg.msg"
   "msg/DigitalInMsg.msg"
   "msg/DigitalOutMsg.msg"
+  "msg/EpropulsionMotorDiagnostic.msg"
+  "msg/IOControllerDiagnosticMsg.msg"
   "msg/WarningSystemsMsg.msg"
-  
+  DEPENDENCIES std_msgs
  )
 
 ament_package()

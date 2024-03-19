@@ -1,0 +1,17 @@
+std_msgs/Header header
+
+float64 left_motor_power
+int32 left_motor_rpm
+int8 left_motor_temperature
+int8 left_motor_drive_mos_temperature
+uint8 left_motor_fault_code_1
+uint8 left_motor_fault_code_2
+
+float64 right_motor_power
+int32 right_motor_rpm
+int8 right_motor_temperature
+int8 right_motor_drive_mos_temperature
+uint8 right_motor_fault_code_1
+uint8 right_motor_fault_code_2
+
+
