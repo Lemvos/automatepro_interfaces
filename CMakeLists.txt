@@ -33,12 +33,12 @@ if(BUILD_TESTING)
 endif()
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/AnalogInMsg.msg"
-  "msg/IOControllerDiagnosticMsg.msg"
-  "msg/DigitalDriveOutMsg.msg"
-  "msg/DigitalInMsg.msg"
-  "msg/DigitalOutMsg.msg"
-  "msg/WarningSystemsMsg.msg"
+  "msg/AnalogIn.msg"
+  "msg/IOControllerDiagnostic.msg"
+  "msg/DigitalDriveOut.msg"
+  "msg/DigitalIn.msg"
+  "msg/DigitalOut.msg"
+  "msg/WarningSystems.msg"
   
  )
 
