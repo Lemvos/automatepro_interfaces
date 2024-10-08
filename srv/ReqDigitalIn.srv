@@ -1,0 +1,6 @@
+# ReqDigitalIn Service
+# This service triggers the IO Controller to republish the 
+# current digital input states on the /io/din topic.
+
+---
+bool success        # Success flag

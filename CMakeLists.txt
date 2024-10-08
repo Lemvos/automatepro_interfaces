@@ -29,6 +29,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/DigitalIn.msg"
   "msg/DigitalOut.msg"
   "msg/WarningSystems.msg"
+  "srv/ReqDigitalIn.srv"
   DEPENDENCIES std_msgs
  )
 
