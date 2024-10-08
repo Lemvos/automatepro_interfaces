@@ -24,10 +24,12 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AnalogIn.msg"
   "msg/EStopStatus.msg"
   "msg/IOControllerDiagnostic.msg"
+  "msg/IOFirmwareDiagnostic.msg"
   "msg/DigitalDriveOut.msg"
   "msg/DigitalIn.msg"
   "msg/DigitalOut.msg"
   "msg/WarningSystems.msg"
+  "srv/ReqDigitalIn.srv"
   DEPENDENCIES std_msgs
  )
 
