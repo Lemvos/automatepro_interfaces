@@ -50,7 +50,6 @@ uint8 HIGH_SIDE_DRIVE_12=42
 bool FORWARD=true
 bool REVERSE=false
 
-std_msgs/Header header          # Header
 uint8 d_drive_pin_id            # Digital drive pin id
 bool direction                  # Direction of the drive (forward/reverse)
 uint8 percent_duty_cycle        # Duty cycle in percentage (0-100)

@@ -12,6 +12,5 @@ uint8 DIGITAL_OUT_08=8
 uint8 DIGITAL_OUT_09=9
 uint8 DIGITAL_OUT_10=10
 
-std_msgs/Header header      # Header
 uint8 d_out_pin_id          # Digital output pin id
 uint8 duty_cycle_percent    # Duty cycle in percentage (0-100)
