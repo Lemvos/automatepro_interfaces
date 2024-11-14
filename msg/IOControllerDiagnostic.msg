@@ -8,6 +8,7 @@ float32 v12_io_smps_voltage_monitor     # 12V IO SMPS voltage monitor in V
 float32 v12_sbc_smps_current_monitor    # 12V SBC SMPS current monitor in A
 float32 v12_sbc_smps_voltage_monitor    # 12V SBC SMPS voltage monitor in V
 float32 v5_io_smps_voltage_monitor      # 5V IO SMPS voltage monitor in V
+float32 v5_io_smps_current_monitor		# 5V IO SMPS Current monitor in A
 float32 total_power_monitor             # Total power monitor in W
 bool v12_io_power_good                  # 12V IO power status
 bool v5_io_power_good                   # 5V IO power status
