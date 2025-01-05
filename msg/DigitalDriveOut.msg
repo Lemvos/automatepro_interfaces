@@ -52,4 +52,4 @@ bool REVERSE=false
 
 uint8 d_drive_pin_id            # Digital drive pin id
 bool direction                  # Direction of the drive (forward/reverse)
-uint8 percent_duty_cycle        # Duty cycle in percentage (0-100)
+uint8 duty_cycle_percent        # Duty cycle in percentage (0-100)
