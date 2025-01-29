@@ -3,9 +3,9 @@
 <package format="3">
   <name>automatepro_interfaces</name>
   <version>1.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="phillip@todo.todo">phillip</maintainer>
-  <license>TODO: License declaration</license>
+  <description>ROS 2 Interfaces for AutomatePro</description>
+  <maintainer email="balachandra.bhat@lemvos.com">Balachandra</maintainer>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   
