@@ -22,6 +22,7 @@ find_package(std_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AnalogIn.msg"
+  "msg/CAN.msg"
   "msg/EStopStatus.msg"
   "msg/IOControllerDiagnostic.msg"
   "msg/IOFirmwareDiagnostic.msg"
