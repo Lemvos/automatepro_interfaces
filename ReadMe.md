@@ -1,4 +1,6 @@
 # AutomatePro Interfaces
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLemvos%2Fautomatepro_interfaces.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FLemvos%2Fautomatepro_interfaces?ref=badge_shield)
+
 Custom ROS Interfaces for AutomatePro
 
 ## Messages
@@ -20,3 +22,7 @@ Custom ROS Interfaces for AutomatePro
 | Type | Description  |
 |---------|---------|
 [`automatepro_interfaces/srv/ReqDigitalIn`](srv/ReqDigitalIn.msg) | Request to send the current state of the digital inputs. When requested, current states will be published to `/io/din`. |
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLemvos%2Fautomatepro_interfaces.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FLemvos%2Fautomatepro_interfaces?ref=badge_large)
