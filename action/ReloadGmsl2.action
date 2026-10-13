@@ -1,0 +1,16 @@
+# Reload the GMSL2 sensor module on behalf of one camera node.
+# The server pauses every other active camera, reloads the module, resumes those
+# cameras and then answers every goal that was pending when the reload started.
+
+# Fully qualified name of the requesting camera node, e.g. /automatepro_cam1_node.
+# The server never pauses or resumes this node.
+string camera_node
+---
+# True when the reload ran and reported success.
+bool success
+string message
+---
+uint8 PHASE_PAUSING = 0
+uint8 PHASE_RELOADING = 1
+uint8 PHASE_RESUMING = 2
+uint8 phase

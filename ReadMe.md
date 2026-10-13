@@ -20,3 +20,10 @@ Custom ROS Interfaces for AutomatePro
 | Type | Description  |
 |---------|---------|
 [`automatepro_interfaces/srv/ReqDigitalIn`](srv/ReqDigitalIn.msg) | Request to send the current state of the digital inputs. When requested, current states will be published to `/io/din`. |
+
+## Actions
+
+
+| Type | Description  |
+|---------|---------|
+| [`automatepro_interfaces`<br/>`/action/ReloadGmsl2`](action/ReloadGmsl2.action) | Requests a reload of the GMSL2 sensor module on behalf of one camera node. Served by `automatepro_driver_manager`, which pauses every other active camera, reloads the module, resumes those cameras and answers every goal pending when the reload started. <br/><br/> **Goal:** <br/><br/> - `camera_node` (`string`): <br/> Fully qualified name of the requesting camera node, e.g. `/automatepro_cam1_node`. The server never pauses or resumes this node. <br/><br/> **Result:** <br/><br/> - `success` (`bool`): <br/> `true` when the reload ran and reported success. <br/><br/> - `message` (`string`): <br/> Outcome of the reload. <br/><br/> **Feedback:** <br/><br/> - `phase` (`uint8`): <br/> `ReloadGmsl2.Feedback.PHASE_PAUSING`, `PHASE_RELOADING` or `PHASE_RESUMING`. |
