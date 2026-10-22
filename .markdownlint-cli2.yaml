@@ -1,0 +1,12 @@
+---
+# markdownlint-cli2 configuration, discovered automatically from the repository
+# root. Run it the way CI does, with the same pinned image:
+#   docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/workdir" \
+#     davidanson/markdownlint-cli2:v0.18.1 "**/*.md"
+# Files ignored by git, such as build output, are skipped.
+gitignore: true
+config:
+  default: true
+
+  # Documentation is written one sentence per line and the renderer wraps it.
+  MD013: false
