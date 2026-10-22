@@ -1,0 +1,191 @@
+name: ROS 2 CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+# Supersede an in-progress run when a pull request is pushed again. Deliberately
+# absent from publish-deb.yaml, where every tag must build.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Least privilege: build and test only read the repository, so no GITHUB_TOKEN
+# write scope is required. Caps fork-PR and same-repo token reach. No job needs
+# the token after its checkout, so no checkout leaves it in the git config.
+permissions:
+  contents: read
+
+# The default shell is `bash -e {0}`, but it falls back to `sh -e {0}` when bash
+# is not resolved, which is what happens inside the ROS container: /bin/sh is
+# dash there, and dash rejects `set -o pipefail`. Declaring bash explicitly gives
+# `bash --noprofile --norc -eo pipefail {0}` in every run step instead of
+# depending on that lookup.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # Both architectures, because rosidl generates type support per architecture
+  # and both are published. fail-fast is off, so each reports its own result.
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-22.04, ubuntu-22.04-arm]
+    runs-on: ${{ matrix.runner }}
+    # Room for a cold container pull and the full suite, well under the
+    # 360-minute default.
+    timeout-minutes: 30
+    container:
+      # Digest-pinned so build and test results are reproducible and an upstream
+      # image rebuild cannot change them silently. Same multi-arch index digest
+      # as publish-deb.yaml.
+      image: ros:humble-ros-base-jammy@sha256:afb40d6be65331c20a114d4e229a7ef099fed1b17bf6370daee193514b32aa16
+      options: --user root
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3-colcon-common-extensions
+          rosdep update
+          rosdep install --from-paths . --ignore-src -r -y
+
+      # colcon runs from the checkout, with build/, install/ and log/ redirected
+      # to /ros_ws so no generated file lands in the source tree and the ament
+      # linters never scan one.
+      - name: Build package
+        run: |
+          set -euo pipefail
+          # -u off while sourcing: ROS 2 setup.sh probes optional variables such
+          # as AMENT_TRACE_SETUP_FILES without a default, so under -u it aborts
+          # with "unbound variable" instead of setting up the environment.
+          set +u
+          # shellcheck source=/dev/null
+          . /opt/ros/humble/setup.sh
+          set -u
+          colcon --log-base /ros_ws/log build \
+            --symlink-install \
+            --build-base /ros_ws/build \
+            --install-base /ros_ws/install
+
+      - name: Run tests
+        run: |
+          set -euo pipefail
+          set +u
+          # shellcheck source=/dev/null
+          . /opt/ros/humble/setup.sh
+          # shellcheck source=/dev/null
+          . /ros_ws/install/setup.sh
+          set -u
+          colcon --log-base /ros_ws/log test \
+            --build-base /ros_ws/build \
+            --install-base /ros_ws/install \
+            --return-code-on-test-failure
+
+      # Always, so a failing suite still prints which test failed and why.
+      - name: Display test results
+        if: always()
+        run: |
+          set -euo pipefail
+          colcon --log-base /ros_ws/log test-result \
+            --test-result-base /ros_ws/build --verbose
+
+      - name: Restore workspace ownership for runner user
+        if: always()
+        uses: ./.github/actions/restore-workspace-ownership
+
+  # ament_lint does not look at .github, so workflow and composite-action shell
+  # is unlinted unless it is checked here. Runs outside a container: the
+  # GitHub-hosted ubuntu images ship shellcheck, which actionlint delegates
+  # run-block linting to.
+  lint-workflows:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      # A pinned version plus a published checksum, rather than a third-party
+      # wrapper action: one fewer supply-chain dependency, and the same binary
+      # can be run locally. Bump ACTIONLINT_VERSION and ACTIONLINT_SHA256
+      # together; the checksum is from the release's
+      # actionlint_<version>_checksums.txt.
+      - name: Install actionlint
+        env:
+          ACTIONLINT_VERSION: '1.7.7'
+          ACTIONLINT_SHA256: '023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757'
+        run: |
+          set -euo pipefail
+          curl -sSfL -o actionlint.tar.gz \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          echo "${ACTIONLINT_SHA256}  actionlint.tar.gz" | sha256sum -c -
+          tar -xzf actionlint.tar.gz actionlint
+
+      # actionlint silently skips run-block linting when shellcheck is missing,
+      # which would turn a partial check into a green run. Fail instead.
+      - name: Lint workflows
+        run: |
+          set -euo pipefail
+          command -v shellcheck > /dev/null || {
+            echo "::error::shellcheck not found; actionlint would skip run-block linting"
+            exit 1
+          }
+          ./actionlint -color
+
+      # actionlint parses a composite action as a workflow and rejects it, so
+      # .github/actions/*/action.yaml is outside its reach; lint its shell here
+      # instead. PyYAML is present on the runner image; installing it when
+      # absent keeps the job from depending on that.
+      - name: Lint composite action scripts
+        run: |
+          set -euo pipefail
+          python3 -c 'import yaml' 2> /dev/null \
+            || python3 -m pip install --quiet --disable-pip-version-check pyyaml
+          python3 .github/scripts/lint-action-scripts.py
+
+  # ament_lint reaches the CMake and package.xml and nothing else, so the
+  # Markdown and the YAML in the tree are unchecked by the build job. Outside a
+  # container, like lint-workflows: the GitHub-hosted image already provides
+  # python3 and docker.
+  lint-docs-and-config:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Version-pinned so a yamllint release cannot turn this job red without a
+      # commit here. The rule set comes from .yamllint at the repository root,
+      # which yamllint discovers on its own.
+      - name: Lint YAML
+        env:
+          YAMLLINT_VERSION: '1.38.0'
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --disable-pip-version-check \
+            "yamllint==${YAMLLINT_VERSION}"
+          yamllint .
+
+      # Digest-pinned for the same reason the ROS container above is: a tag
+      # alone would let an upstream rebuild change the rule set under us. The
+      # rule set comes from .markdownlint-cli2.yaml.
+      - name: Lint Markdown
+        env:
+          MARKDOWNLINT_IMAGE: davidanson/markdownlint-cli2:v0.18.1@sha256:173cb697a255a8a985f2c6a83b4f7a8b3c98f4fb382c71c45f1c52e4d4fed63a
+        run: |
+          set -euo pipefail
+          docker run --rm -u "$(id -u):$(id -g)" -v "${PWD}:/workdir" \
+            "${MARKDOWNLINT_IMAGE}" "**/*.md"
