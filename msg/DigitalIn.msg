@@ -1,8 +1,7 @@
-# DigitalIn Message
-# This message represents the digital input values received by the io-controller
+# Digital input values received by the IO controller.
 
-std_msgs/Header header  # Header
-bool din_01             # Digital inputs 1-10 (true/false)
+std_msgs/Header header
+bool din_01  # Digital inputs 1 to 10
 bool din_02
 bool din_03
 bool din_04

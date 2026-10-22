@@ -1,9 +1,12 @@
-uint8 FLAG_WRITE = 1
-uint8 FLAG_READ = 0
+# Read or write one IO controller configuration value.
 
-uint8 flag
-uint16 key
-float32 val
+# Flags
+uint8 FLAG_WRITE=1
+uint8 FLAG_READ=0
+
+uint8 flag       # FLAG_READ or FLAG_WRITE
+uint16 key       # The configuration value addressed
+float32 val      # The value to write
 ---
-uint16 ret_code
-float32 ret_val
+uint16 ret_code  # Return code
+float32 ret_val  # Returned value

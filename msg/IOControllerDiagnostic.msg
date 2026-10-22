@@ -1,24 +1,23 @@
-# IOControllerDiagnostic Message
-# This message contains the diagnostic information of the io-controller
+# Diagnostics of the IO controller hardware.
 
-std_msgs/Header header                  # Header
-float32 vbatt_voltage_monitor           # Battery voltage monitor in V
-float32 v12_io_smps_current_monitor     # 12V IO SMPS current monitor in A
-float32 v12_io_smps_voltage_monitor     # 12V IO SMPS voltage monitor in V
-float32 main_sbc_smps_current_monitor   # 12V or 5V SBC SMPS current monitor in A
-float32 main_sbc_smps_voltage_monitor   # 12V or 5V SBC SMPS voltage monitor in V
-float32 v5_io_smps_voltage_monitor      # 5V IO SMPS voltage monitor in V
-float32 v5_io_smps_current_monitor	# 5V IO SMPS Current monitor in A
-float32 amp_total_power_monitor         # Total power monitor in W
-bool v12_io_power_good                  # 12V IO power status
-bool v5_io_power_good                   # 5V IO power status
-bool v3_3_io_power_good                 # 3.3V IO power status  
-bool main_sbc_power_good                 # 12V or 5V SBC power status 
-bool v5_sbc_power_good                  # 5V SBC power status
-bool v3_3_sbc_power_good                # 3.3V SBC power status
-bool v1_8_sbc_power_good                # 1.8V SBC power status
-bool digital_drive_fault_1                # Motor drive fault 1 status
-bool digital_drive_fault_2                # Motor drive fault 2 status
-bool digital_drive_fault_3                # Motor drive fault 3 status
-bool digital_drive_fault_4                # Motor drive fault 4 status
-int8 board_temp                         # Board temperature in degree Celsius
+std_msgs/Header header
+float32 vbatt_voltage_monitor          # Battery voltage, in V
+float32 v12_io_smps_current_monitor    # 12 V IO SMPS current, in A
+float32 v12_io_smps_voltage_monitor    # 12 V IO SMPS voltage, in V
+float32 main_sbc_smps_current_monitor  # 12 V or 5 V SBC SMPS current, in A
+float32 main_sbc_smps_voltage_monitor  # 12 V or 5 V SBC SMPS voltage, in V
+float32 v5_io_smps_voltage_monitor     # 5 V IO SMPS voltage, in V
+float32 v5_io_smps_current_monitor     # 5 V IO SMPS current, in A
+float32 amp_total_power_monitor        # Total power, in W
+bool v12_io_power_good                 # 12 V IO power good
+bool v5_io_power_good                  # 5 V IO power good
+bool v3_3_io_power_good                # 3.3 V IO power good
+bool main_sbc_power_good               # 12 V or 5 V SBC power good
+bool v5_sbc_power_good                 # 5 V SBC power good
+bool v3_3_sbc_power_good               # 3.3 V SBC power good
+bool v1_8_sbc_power_good               # 1.8 V SBC power good
+bool digital_drive_fault_1             # Drive 1 fault
+bool digital_drive_fault_2             # Drive 2 fault
+bool digital_drive_fault_3             # Drive 3 fault
+bool digital_drive_fault_4             # Drive 4 fault
+int8 board_temp                        # Board temperature, in degrees Celsius
