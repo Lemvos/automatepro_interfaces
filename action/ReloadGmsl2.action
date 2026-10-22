@@ -10,7 +10,7 @@ string camera_node
 bool success
 string message
 ---
-uint8 PHASE_PAUSING = 0
-uint8 PHASE_RELOADING = 1
-uint8 PHASE_RESUMING = 2
+uint8 PHASE_PAUSING=0
+uint8 PHASE_RELOADING=1
+uint8 PHASE_RESUMING=2
 uint8 phase
