@@ -1,0 +1,27 @@
+# Keeps the SHA-pinned actions in .github/workflows and .github/actions current.
+# Every update is a pull request that a person reviews and merges; nothing here
+# enables automerge.
+#
+# Bumped by hand instead: the digest-pinned container images and the actionlint
+# version and checksum in ros2-ci.yaml.
+version: 2
+
+updates:
+  # One entry, so one grouped pull request a week carries every action bump:
+  # "/" reaches .github/workflows and a root-level action.yaml, and the glob
+  # every composite action under .github/actions, including one added later.
+  - package-ecosystem: github-actions
+    directories:
+      - /
+      - /.github/actions/*
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 5
+    # Conventional Commits, matching the rest of the repository history.
+    commit-message:
+      prefix: chore
+      include: scope

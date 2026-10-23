@@ -1,0 +1,20 @@
+name: Restore Workspace Ownership
+description: >-
+  Hands the checkout back to the runner user after a job that ran as root inside
+  a container. Every workflow here uses `options: --user root`, which leaves the
+  workspace owned by root; the runner then cannot clean it up between jobs.
+  Invoke as the last step of such a job, with `if: always()` so it also runs
+  when an earlier step failed.
+
+runs:
+  using: composite
+  steps:
+    - name: Restore workspace ownership for runner user
+      shell: bash
+      run: |
+        set -euo pipefail
+        # RUNNER_TEMP is created by the runner process outside the container, so
+        # its owner is the uid/gid the workspace has to be handed back to.
+        HOST_UID="$(stat -c '%u' "${RUNNER_TEMP}")"
+        HOST_GID="$(stat -c '%g' "${RUNNER_TEMP}")"
+        chown -R "${HOST_UID}:${HOST_GID}" "$(dirname "${GITHUB_WORKSPACE}")"
