@@ -57,6 +57,6 @@ Every job runs on a GitHub-hosted runner; a public repository must not use a sel
 
 ## Dependabot
 
-`.github/dependabot.yml` keeps the SHA-pinned `uses:` refs current, weekly, with one grouped pull request for the workflows and one for the composite actions under `.github/actions/*`, and a `chore` commit prefix.
+`.github/dependabot.yml` keeps the SHA-pinned `uses:` refs current, weekly, with one grouped pull request covering the workflows and the composite actions under `.github/actions/*`, and a `chore` commit prefix.
 Every update is a pull request that a person reviews and merges; nothing grants automerge.
 The digest-pinned container image and the `actionlint` version and checksum are outside its reach and are bumped by hand.
