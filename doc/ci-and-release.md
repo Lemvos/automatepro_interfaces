@@ -14,12 +14,19 @@ What CI checks on a pull request is in [CONTRIBUTING.md](../CONTRIBUTING.md#test
 
 | Workflow | Trigger | What it does |
 | --- | --- | --- |
-| `ros2-ci.yaml` | push to `master`, pull request, manual | Builds and tests on amd64 and arm64, and runs `actionlint`, `yamllint` and `markdownlint`. |
+| `ci.yaml` | push to `master`, pull request (opened, edited, pushed, reopened), manual | Builds and tests on amd64 and arm64, runs `actionlint`, `yamllint` and `markdownlint`, checks the pull request title, and reports the result as `all-green`. |
 | `publish-deb.yaml` | push of a `v*` tag, manual from a tag | Builds the arm64 and amd64 Debian packages, after checking that the tag is on `master` and matches `package.xml`, and publishes them to Cloudsmith. |
 
 Both workflows grant the token `contents: read` only, leave it out of every checkout's git config, run every `run:` step in `bash`, pin every third-party action to a commit SHA, and pin the container image by digest.
 
-The build job of `ros2-ci.yaml` builds into `/ros_ws`, outside the checkout, so no generated file lands in the source tree.
+`ci.yaml` is self-contained: the repository is public, and a public repository cannot call workflows or actions from a private one.
+Its `all-green` job is the one status check the `master` ruleset requires; it runs even when a check failed, and passes only when every check succeeded, so a failed, cancelled or skipped check blocks the merge.
+A check added to `ci.yaml` joins the gate through `all-green`'s `needs`, with no ruleset change.
+
+The squash-merge commit takes the pull request title as its subject, and that subject is the changelog line, so the `pr-title` job requires a Conventional Commits title: a type from `feat`, `fix`, `build`, `chore`, `ci`, `docs`, `perf`, `refactor`, `style` and `test`, an optional scope, a lowercase description without a trailing period, and at most 72 characters.
+Dependabot's generated titles are exempt.
+
+The build job of `ci.yaml` builds into `/ros_ws`, outside the checkout, so no generated file lands in the source tree.
 The container jobs run as root and end with the `restore-workspace-ownership` composite action, which returns the checkout to the runner user even when an earlier step failed.
 
 ## Releasing
@@ -30,7 +37,7 @@ A manual run of `publish-deb.yaml` has to select a tag as well.
 1. Merge the release pull request, with the version in `package.xml` and the dated section in `CHANGELOG.rst`, to `master`.
 2. Tag the merge commit `v<version>` and push the tag.
 3. `verify-tag`, on a GitHub-hosted runner, rejects a ref that is not a tag, a tag whose commit is not on `master`, and a tag whose version, without the leading `v`, differs from the `<version>` in `package.xml`.
-   The workflow does not re-run `ros2-ci.yaml`; it relies on the tagged commit being on `master`.
+   The workflow does not re-run `ci.yaml`; it relies on the tagged commit being on `master`.
 4. `build-deb` builds the `.deb` once per architecture, as root in the digest-pinned `ros:humble-ros-base-jammy` container, with a 45-minute timeout, on GitHub's `ubuntu-22.04-arm` and `ubuntu-22.04` runners.
    It runs `bloom-generate rosdebian` and `fakeroot debian/rules binary`; bloom takes the version from `package.xml`.
 5. `publish-deb` runs only when both builds succeed, installs the Cloudsmith CLI, pinned at 1.20.2, and pushes both packages to `<CLOUDSMITH_OWNER>/<CLOUDSMITH_REPO>/ubuntu/jammy`.

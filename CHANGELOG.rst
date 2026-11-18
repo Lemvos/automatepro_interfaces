@@ -20,8 +20,9 @@ Changelog for package automatepro_interfaces
   as C++17.
 * Publish the arm64 and amd64 packages only for a ``v*`` tag on ``master``
   that matches ``package.xml``, never replacing a published version. A new CI
-  workflow builds and tests every pull request on both architectures and
-  lints the workflows, the YAML and the Markdown.
+  workflow builds and tests every pull request on both architectures, lints
+  the workflows, the YAML, the Markdown and the pull request title, and
+  reports the result as the ``all-green`` check.
 * Name Lemvos Robotics GmbH as maintainer, author and copyright holder;
   ``LICENSE`` is the unmodified Apache License 2.0 text.
 * Replace ``ReadMe.md`` with ``README.md``, which documents every type; add

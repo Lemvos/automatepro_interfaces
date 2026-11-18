@@ -1,9 +1,19 @@
 name: ROS 2 CI
 
+# Every check of this package, and the all-green job that summarizes them.
+# all-green is the one status check the master ruleset requires, so adding or
+# removing a check job needs no ruleset edit: change all-green's needs instead.
+#
+# Self-contained on purpose: the repository is public, and a public repository
+# cannot call workflows or actions from a private one. Only SHA-pinned public
+# actions and the local actions under .github/actions are used.
+#
+# The edited type re-runs the checks when a pull request title is corrected.
 on:
   push:
     branches: [master]
   pull_request:
+    types: [opened, edited, synchronize, reopened]
   workflow_dispatch:
 
 # Supersede an in-progress run when a pull request is pushed again. Deliberately
@@ -189,3 +199,57 @@ jobs:
           set -euo pipefail
           docker run --rm -u "$(id -u):$(id -g)" -v "${PWD}:/workdir" \
             "${MARKDOWNLINT_IMAGE}" "**/*.md"
+
+  # The squash-merge commit takes the pull request title as its subject, and
+  # that subject is the changelog line, so the title has to parse as a
+  # Conventional Commits subject. The job also runs on a push or a manual run,
+  # where there is no title and the step is skipped, so all-green never sees it
+  # skipped. Dependabot titles are generated, carry a valid type and run past
+  # 72 characters, so the step skips them too. The title reaches the script
+  # through env:, never interpolated.
+  pr-title:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - name: Lint the pull request title
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.user.login != 'dependabot[bot]'
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          set -euo pipefail
+          types='feat|fix|build|chore|ci|docs|perf|refactor|style|test'
+          pattern="^(${types})(\([a-z0-9_./-]+\))?!?: [a-z0-9\`].*[^.]\$"
+          if ! [[ "${TITLE}" =~ ${pattern} ]]; then
+            echo "::error::The title is not '<type>[(scope)][!]: <description>' with a type from ${types//|/, }, a lowercase description and no trailing period: ${TITLE}"
+            exit 1
+          fi
+          if [ "${#TITLE}" -gt 72 ]; then
+            echo "::error::The title is ${#TITLE} characters long; the limit is 72."
+            exit 1
+          fi
+          echo "Title OK: ${TITLE}"
+
+  # The check the ruleset requires. It runs even when a job it needs failed or
+  # was cancelled, and passes only when every one of them succeeded: failure,
+  # cancelled and skipped all fail it, so a job that never ran cannot pass the
+  # gate. A matrix job reports one result for all its legs.
+  all-green:
+    if: always()
+    needs: [build-and-test, lint-workflows, lint-docs-and-config, pr-title]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every check to have succeeded
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          set -euo pipefail
+          echo "Results: ${RESULTS}"
+          for result in ${RESULTS}; do
+            if [ "${result}" != "success" ]; then
+              echo "::error::A required check ended as ${result}."
+              exit 1
+            fi
+          done

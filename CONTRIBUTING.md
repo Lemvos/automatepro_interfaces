@@ -25,6 +25,7 @@ The definitions themselves are checked by `colcon build`, which fails on a defin
 
 CI builds the package and runs this suite on every pull request and every push to `master`, on amd64 (`ubuntu-22.04`) and arm64 (`ubuntu-22.04-arm`), in the `ros:humble-ros-base-jammy` container.
 Each architecture reports its own result, and a new push to a pull request cancels the run in progress.
+A pull request merges only when the `all-green` check passes, which needs every check of [Tests](#tests) and [Linters](#linters) to succeed and the pull request title to be a Conventional Commits subject, such as `docs: correct the CAN dlc range`.
 
 ## Linters
 

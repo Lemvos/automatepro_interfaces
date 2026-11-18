@@ -1,7 +1,7 @@
 # AutomatePro Interfaces
 
 [![ROS 2 Humble](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/)
-[![CI](https://img.shields.io/github/actions/workflow/status/Lemvos/automatepro_interfaces/ros2-ci.yaml?branch=master)](https://github.com/Lemvos/automatepro_interfaces/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/Lemvos/automatepro_interfaces/ci.yaml?branch=master)](https://github.com/Lemvos/automatepro_interfaces/actions)
 
 ROS 2 message and service definitions for the AutomatePro IO controller and drivers.
 

@@ -48,7 +48,7 @@ jobs:
           persist-credentials: false
 
       # A release may only carry a commit that is already on the default branch
-      # and so has passed branch CI (ros2-ci.yaml); nothing in this workflow
+      # and so has passed branch CI (ci.yaml); nothing in this workflow
       # re-runs it. The ref-type check covers the manual dispatch, whose ref is
       # a branch unless a tag is selected.
       - name: Verify the tag is on the default branch
@@ -104,7 +104,7 @@ jobs:
     container:
       # Digest-pinned so an upstream rebuild or a moved tag cannot silently
       # change what builds the artifact every vessel installs. The same
-      # multi-arch index digest as ros2-ci.yaml; bump the digest and the tag
+      # multi-arch index digest as ci.yaml; bump the digest and the tag
       # together.
       image: ros:humble-ros-base-jammy@sha256:afb40d6be65331c20a114d4e229a7ef099fed1b17bf6370daee193514b32aa16
       options: --user root
