@@ -44,7 +44,7 @@ A manual run of `publish-deb.yaml` has to select a tag as well.
 
 The release workflow has no concurrency group, so every tag builds.
 
-The packages that depend on this one check it out at a pinned tag in their own CI, so a release is complete once they move to the new tag.
+The packages that depend on this one install the published `ros-humble-automatepro-interfaces`, so a release reaches them once it is on Cloudsmith.
 
 > [!CAUTION]
 > A push to Cloudsmith cannot be undone.
