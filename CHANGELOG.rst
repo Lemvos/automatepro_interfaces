@@ -2,7 +2,7 @@
 Changelog for package automatepro_interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2026-10-20)
+1.1.0 (2026-11-18)
 ------------------
 * Since the ``v1.0.0`` tag, the ``AnalogIn`` fields ``ain_01`` to ``ain_14``
   are ``int16`` instead of ``uint16``, and ``IOFirmwareDiagnostic`` carries
