@@ -4,17 +4,11 @@ Changelog for package automatepro_interfaces
 
 1.1.0 (2026-11-18)
 ------------------
-* Since the ``v1.0.0`` tag, the ``AnalogIn`` fields ``ain_01`` to ``ain_14``
-  are ``int16`` instead of ``uint16``, and ``IOFirmwareDiagnostic`` carries
-  ``uint8[10] fault_code`` in place of ``uint16 fault_code`` and
-  ``uint8[4] reserved``. The published 1.0.0 package, built from ``master``,
-  already had both changes; code built from the ``v1.0.0`` tag cannot exchange
-  either message with this release.
-* Also since the ``v1.0.0`` tag: the ``CAN`` message, the ``IOConfig``
-  service, and the error-code and bitmask constants of
-  ``IOFirmwareDiagnostic``.
-* Remove ``msg/GNSSHeading.msg``, which was never built into the package.
-* Tidy the comments of the definitions; no field, type or constant changes.
+* No message or service changes a field, a type or a constant against the
+  published 1.0.0 package.
+* Remove ``msg/GNSSHeading.msg`` from the source; it was never built into the
+  package.
+* Tidy the comments of the definitions.
 * Export ``rosidl_default_runtime`` and declare ``rosidl_default_generators``
   as a build tool dependency; require CMake 3.22 and build the generated C++
   as C++17.
@@ -30,4 +24,14 @@ Changelog for package automatepro_interfaces
 
 1.0.0 (2025-01-29)
 ------------------
-* First tagged release.
+* First release: the messages ``AnalogIn``, ``CAN``, ``DigitalDriveOut``,
+  ``DigitalIn``, ``DigitalOut``, ``EStopStatus``, ``IOControllerDiagnostic``,
+  ``IOFirmwareDiagnostic`` and ``WarningSystems``, and the services
+  ``IOConfig`` and ``ReqDigitalIn``.
+* The published package was built from ``master`` after the ``v1.0.0`` tag.
+  The tag's source differs: ``AnalogIn`` has ``uint16`` inputs instead of
+  ``int16``, ``IOFirmwareDiagnostic`` has ``uint16 fault_code`` and
+  ``uint8[4] reserved`` instead of ``uint8[10] fault_code`` and no constants,
+  and ``CAN`` and ``IOConfig`` are missing. Code built from the tag cannot
+  exchange ``AnalogIn`` or ``IOFirmwareDiagnostic`` with the published
+  package.
