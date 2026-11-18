@@ -1,2 +1,63 @@
-.obj*/
+# ROS 2 / colcon build artifacts
+build/
+install/
+log/
+compile_commands.json
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# C and C++
+*.o
+*.so
+*.a
+*.gcda
+*.gcno
+*.deb
+*.ddeb
 debian/
+
+# Coverage
+coverage.info
+coverage_base.info
+coverage_test.info
+coverage_filtered.info
+*.lcov
+
+# Editors and local tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets, keys, and certificates - prevent accidental commits
+.env
+# `.env` alone does not match `.env.local` / `.env.production`; both are needed.
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+*.jks
+*.crt
+*.csr
+id_rsa
+id_ecdsa
+id_ed25519
+
+# SROS2 keystore directories
+keystore/
+enclaves/
+
+# bloom-generate/dpkg-buildpackage object directory; the suffix is the build
+# host's triplet, so the pattern covers native and cross builds alike.
+.obj-*/

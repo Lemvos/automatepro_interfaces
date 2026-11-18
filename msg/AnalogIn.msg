@@ -1,8 +1,7 @@
-# AnalogIn Message
-# This message represents the analog input values received by the io-controller
+# Analog input values received by the IO controller.
 
-std_msgs/Header header  # Header
-int16 ain_01           # Analog inputs 1-14 in mV
+std_msgs/Header header
+int16 ain_01  # Analog inputs 1 to 14, in mV
 int16 ain_02
 int16 ain_03
 int16 ain_04

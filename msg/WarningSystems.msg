@@ -1,12 +1,13 @@
-# WarningSystems Message
-# This message is used to send desired warning system states to the io-controller
+# Desired state of one warning system of the IO controller.
 
+# Warning systems
 uint8 WARNING_BUZZER=1
 uint8 WARNING_LIGHT_01=2
 uint8 WARNING_LIGHT_02=3
 
+# States
 bool ON=true
 bool OFF=false
 
-uint8 warning_system_id     # Warning system id
-bool state                  # State of the warning system
+uint8 warning_system_id  # One of the WARNING_* constants above
+bool state               # ON or OFF

@@ -1,6 +1,5 @@
-# EStopStatus Message
-# This message is used to publish the status of the E-Stop
+# Status of the E-Stop.
 
-std_msgs/Header header  # Header of the message
-bool is_engaged         # Indicates whether the E-Stop is engaged or not
-uint8 fault_code        # Indicates the fault code of the E-Stop
+std_msgs/Header header
+bool is_engaged   # True while the E-Stop is engaged
+uint8 fault_code  # Fault code of the E-Stop

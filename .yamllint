@@ -1,0 +1,18 @@
+---
+# yamllint configuration. Run it the way CI does, from the repository root:
+#   yamllint .
+# yamllint discovers this file automatically, so no -c argument is needed.
+extends: default
+
+rules:
+  # Pinned action SHAs and image digests run past any column limit, and
+  # hard-wrapping a YAML string changes its value.
+  line-length: disable
+
+  # GitHub Actions workflows do not use a document start marker.
+  document-start: disable
+
+  truthy:
+    # `on:` in a workflow is a key, not a YAML 1.1 boolean; values are still
+    # checked.
+    check-keys: false

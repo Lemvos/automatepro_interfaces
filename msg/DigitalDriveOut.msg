@@ -1,6 +1,6 @@
-# DigitalDriveOut Message
-# This message is used to send desired digital drive states to the io-controller
+# Desired state of one digital drive of the IO controller.
 
+# Full-bridge drives
 uint8 FULL_BRIDGE_DRIVE_01=1
 uint8 FULL_BRIDGE_DRIVE_02=2
 uint8 FULL_BRIDGE_DRIVE_03=3
@@ -8,6 +8,7 @@ uint8 FULL_BRIDGE_DRIVE_04=4
 uint8 FULL_BRIDGE_DRIVE_05=5
 uint8 FULL_BRIDGE_DRIVE_06=6
 
+# Half-bridge drives
 uint8 HALF_BRIDGE_DRIVE_01=7
 uint8 HALF_BRIDGE_DRIVE_02=8
 uint8 HALF_BRIDGE_DRIVE_03=9
@@ -21,6 +22,7 @@ uint8 HALF_BRIDGE_DRIVE_10=16
 uint8 HALF_BRIDGE_DRIVE_11=17
 uint8 HALF_BRIDGE_DRIVE_12=18
 
+# Low-side drives
 uint8 LOW_SIDE_DRIVE_01=19
 uint8 LOW_SIDE_DRIVE_02=20
 uint8 LOW_SIDE_DRIVE_03=21
@@ -34,6 +36,7 @@ uint8 LOW_SIDE_DRIVE_10=28
 uint8 LOW_SIDE_DRIVE_11=29
 uint8 LOW_SIDE_DRIVE_12=30
 
+# High-side drives
 uint8 HIGH_SIDE_DRIVE_01=31
 uint8 HIGH_SIDE_DRIVE_02=32
 uint8 HIGH_SIDE_DRIVE_03=33
@@ -47,9 +50,10 @@ uint8 HIGH_SIDE_DRIVE_10=40
 uint8 HIGH_SIDE_DRIVE_11=41
 uint8 HIGH_SIDE_DRIVE_12=42
 
+# Directions
 bool FORWARD=true
 bool REVERSE=false
 
-uint8 d_drive_pin_id            # Digital drive pin id
-bool direction                  # Direction of the drive (forward/reverse)
-uint8 duty_cycle_percent        # Duty cycle in percentage (0-100)
+uint8 d_drive_pin_id      # Drive, one of the *_DRIVE_* constants above
+bool direction            # FORWARD or REVERSE
+uint8 duty_cycle_percent  # Duty cycle, 0 to 100 %
