@@ -2,6 +2,11 @@
 Changelog for package automatepro_interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.1 (2026-11-26)
+------------------
+* Name Lemvos GmbH as maintainer, author and copyright holder in
+  ``package.xml`` and ``CMakeLists.txt``.
+
 1.1.0 (2026-11-18)
 ------------------
 * No message or service changes a field, a type or a constant against the
